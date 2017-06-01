@@ -30,7 +30,7 @@ public class QuizActivity extends AppCompatActivity {
 			new Question(R.string.question_asia, true)
 	};
 
-	private int mCurrentIndex = 00;
+	private int mCurrentIndex = 0;
 
 	private void updateQuestion () {
 		int question = mQuestionBank[mCurrentIndex].getTextResId();
