@@ -4,16 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class CheatActivity extends AppCompatActivity {
 
+	private static final String TAG = "CheatActivity";
 	private static final String EXTRA_ANSWER_IS_TRUE = "com.bignerdranch.android.geoquiz.answer_is_true";
 	private static final String EXTRA_ANSWER_SHOWN = "com.bignerdranch.android.geoquiz.answer_shown";
 
+	private static final String KEY_CHEAT = "cheated";
+
 	private boolean mAnswerIsTrue;
+
+	private boolean mCheated;
 
 	private TextView mAnswerTextView;
 	private Button mShowAnswer;
@@ -46,14 +52,27 @@ public class CheatActivity extends AppCompatActivity {
 				} else {
 					mAnswerTextView.setText(R.string.false_button);
 				}
-				setAnswerShownResult(true);
+
+				setAnswerShownResult(mCheated = true);
 			}
 		});
+
+		if (savedInstanceState != null) {
+			setAnswerShownResult(savedInstanceState.getBoolean(KEY_CHEAT, false));
+		}
 	}
 
-	private void setAnswerShownResult(boolean isAnswerShown) {
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		super.onSaveInstanceState(savedInstanceState);
+		Log.i(TAG, "onSaveInstanceStare() called");
+		savedInstanceState.putBoolean(KEY_CHEAT, mCheated);
+	}
+
+	private boolean setAnswerShownResult(boolean isAnswerShown) {
 		Intent data = new Intent();
 		data.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
 		setResult(RESULT_OK, data);
+		return isAnswerShown;
 	}
 }
