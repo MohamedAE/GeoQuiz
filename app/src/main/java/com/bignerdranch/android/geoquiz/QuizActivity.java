@@ -108,7 +108,6 @@ public class QuizActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				mCurrentIndex = (++mCurrentIndex) % mQuestionBank.length;
-				//mIsCheater[mCurrentIndex] = false;
 				updateQuestion();
 			}
 		});
